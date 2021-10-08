@@ -22,3 +22,6 @@ jobs:
       env:
         CI: true
         DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+        locationIq: ${{ secrets.locationIq }}
+        weatherbit: ${{ secrets.weatherbit }}
+        yelp: ${{ secrets.yelp }}
