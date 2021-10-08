@@ -17,33 +17,82 @@ describe('app routes', () => {
 
     test('returns a city', async() => {
 
-      const expectation = [
-        {
-          'id': 1,
-          'name': 'bessie',
-          'cool_factor': 3,
-          'owner_id': 1
-        },
-        {
-          'id': 2,
-          'name': 'jumpy',
-          'cool_factor': 4,
-          'owner_id': 1
-        },
-        {
-          'id': 3,
-          'name': 'spot',
-          'cool_factor': 10,
-          'owner_id': 1
-        }
-      ];
+      const expectation = {
+        'formatted_query': expect.any(String),
+        'latitude': expect.any(String),
+        'longitude': expect.any(String)
+      };
+        
 
       const data = await fakeRequest(app)
-        .get('/animals')
+        .get('/location?search=Portland')
         .expect('Content-Type', /json/)
         .expect(200);
 
       expect(data.body).toEqual(expectation);
     });
   });
+});
+
+test('returns weather', async() => {
+
+  const expectation = [
+    {
+      'forecast': expect.any(String),
+      'time': expect.any(String)
+    },
+    {
+      'forecast': expect.any(String),
+      'time': expect.any(String)
+    },
+    {
+      'forecast': expect.any(String),
+      'time': expect.any(String)
+    },
+    {
+      'forecast': expect.any(String),
+      'time': expect.any(String)
+    },
+    {
+      'forecast': expect.any(String),
+      'time': expect.any(String)
+    },
+    {
+      'forecast': expect.any(String),
+      'time': expect.any(String)
+    },
+    {
+      'forecast': expect.any(String),
+      'time': expect.any(String)
+    }
+  ];
+    
+
+  const data = await fakeRequest(app)
+    .get('/weather?latitude=45.523064&longitude=-122.676483')
+    .expect('Content-Type', /json/)
+    .expect(200);
+
+  expect(data.body).toEqual(expectation);
+});
+
+
+test('returns reviews', async() => {
+
+  const expectation = 
+    {
+      'name': expect.any(String),
+      'image_url': expect.any(String),
+      'price': expect.any(String),
+      'rating': expect.any(Number),
+      'url': expect.any(String),
+    };
+    
+
+  const data = await fakeRequest(app)
+    .get('/reviews?latitude=45.523064&longitude=-122.676483')
+    .expect('Content-Type', /json/)
+    .expect(200);
+
+  expect(data.body).toEqual(expect.arrayContaining([expectation]));
 });
